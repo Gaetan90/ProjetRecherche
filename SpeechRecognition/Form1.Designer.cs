@@ -15,6 +15,7 @@
         public TextBox textBox1;
         private Label label1;
         public TextBox textBox2;
+        public bool volume = false;
 
         public void button1_Click(object sender, EventArgs e)
         {
@@ -27,29 +28,31 @@
                 button1.Text = "Speak Now";
                 recognizer.SetInputToDefaultAudioDevice();
                 recognizer.BabbleTimeout = TimeSpan.FromSeconds(2);
-                //recognizer.AudioLevelUpdated +=
-                //    new EventHandler<AudioLevelUpdatedEventArgs>(recognizer_AudioLevelUpdated);
-                Console.WriteLine("The audio level is now: {0}.", recognizer.AudioLevel);
+                recognizer.AudioLevelUpdated +=
+                new EventHandler<AudioLevelUpdatedEventArgs>(recognizer_AudioLevelUpdated);
                 RecognitionResult result = recognizer.Recognize();
-                textBox2.Text = result.Text;
-                System.Collections.ObjectModel.ReadOnlyCollection<RecognizedWordUnit> words = result.Words;
-                foreach(RecognizedWordUnit w in words)
+                if(volume == true)
                 {
-                    switch (w.Text)
+                    textBox2.Text = result.Text;        
+                    System.Collections.ObjectModel.ReadOnlyCollection<RecognizedWordUnit> words = result.Words;
+                    foreach (RecognizedWordUnit w in words)
                     {
-                        case "start":
-                        case "starts":
-                            textBox1.Text = "start the engine";
-                            break;
-                        case "stop":
-                            textBox1.Text = "stop the machine";
-                            break;
-                        case "previous":
-                            textBox1.Text = "previous machine";
-                            break;
-                        case "next":
-                            textBox1.Text = "next machine";
-                            break;
+                        switch (w.Text)
+                        {
+                            case "start":
+                            case "starts":
+                                textBox1.Text = "start the engine";
+                                break;
+                            case "stop":
+                                textBox1.Text = "stop the machine";
+                                break;
+                            case "previous":
+                                textBox1.Text = "previous machine";
+                                break;
+                            case "next":
+                                textBox1.Text = "next machine";
+                                break;
+                        }
                     }
                 }
             }
@@ -65,6 +68,11 @@
 
         void recognizer_AudioLevelUpdated(object sender, AudioLevelUpdatedEventArgs e)
         {
+            if ((e.AudioLevel > 30))
+            {
+                volume = true;
+            }
+
             Console.WriteLine("The audio level is now: {0}.", e.AudioLevel);
         }
 
