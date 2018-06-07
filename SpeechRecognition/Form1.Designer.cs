@@ -14,6 +14,7 @@
         public Button button1;
         public TextBox textBox1;
         private Label label1;
+        private Label label2;
         public TextBox textBox2;
         public bool volume = false;
 
@@ -25,7 +26,7 @@
             try
             {
                 Console.WriteLine("Listening...");
-                button1.Text = "Speak Now";
+                button1.Text = "Press then speak";
                 recognizer.SetInputToDefaultAudioDevice();
                 recognizer.BabbleTimeout = TimeSpan.FromSeconds(2);
                 recognizer.AudioLevelUpdated +=
@@ -33,24 +34,32 @@
                 RecognitionResult result = recognizer.Recognize();
                 if(volume == true)
                 {
-                    textBox2.Text = result.Text;        
+                    textBox2.Text = result.Text;
+                    Console.WriteLine("Confiance:" + result.Confidence*100 + "%");
                     System.Collections.ObjectModel.ReadOnlyCollection<RecognizedWordUnit> words = result.Words;
                     foreach (RecognizedWordUnit w in words)
                     {
                         switch (w.Text)
                         {
+                            case "Start":
                             case "start":
                             case "starts":
                                 textBox1.Text = "start the engine";
                                 break;
+                            case "Stop":
                             case "stop":
                                 textBox1.Text = "stop the machine";
                                 break;
+                            case "Previous":
                             case "previous":
                                 textBox1.Text = "previous machine";
                                 break;
+                            case "Next":
                             case "next":
                                 textBox1.Text = "next machine";
+                                break;
+                            default:
+                                textBox1.Text = "unrecognized action";
                                 break;
                         }
                     }
@@ -68,14 +77,12 @@
 
         void recognizer_AudioLevelUpdated(object sender, AudioLevelUpdatedEventArgs e)
         {
-            if ((e.AudioLevel > 30))
+            if ((e.AudioLevel > 10))
             {
                 volume = true;
             }
 
             Console.WriteLine("The audio level is now: {0}.", e.AudioLevel);
         }
-
-
     }
 }

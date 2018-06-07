@@ -27,6 +27,7 @@ namespace SpeechRecognition
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
@@ -48,7 +49,7 @@ namespace SpeechRecognition
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(119, 238);
+            this.label1.Location = new System.Drawing.Point(119, 216);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 13);
             this.label1.TabIndex = 2;
@@ -56,14 +57,24 @@ namespace SpeechRecognition
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(184, 267);
+            this.textBox2.Location = new System.Drawing.Point(190, 209);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(585, 20);
             this.textBox2.TabIndex = 3;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(119, 238);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Action :";
+            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(952, 554);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
